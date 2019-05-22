@@ -23,11 +23,9 @@ adminRoutes.route('/register').post((req, res) => {
             res.send(error.message);
         }
         client.close();
-
     }());
-
-    
 });
-
-
+adminRoutes.route('/login').get((req, res)=>{
+res.render('login');
+});
 module.exports = adminRoutes;
