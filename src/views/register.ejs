@@ -7,6 +7,9 @@
   </head>
   <body>
   
+
+
+
   <div class="site-wrap">
 
     <div class="site-mobile-menu">
@@ -44,8 +47,8 @@
                 <li><a href="blog.html">Blog</a></li>
                 <li><a href="contact.html">Contact</a></li>
 
-                <li class="ml-xl-3 login"><a href="/admin/login"><span class="border-left pl-xl-4"></span>Log In</a></li>
-                <li class="active"><a href="/admin/register">Register</a></li>
+                <li class="ml-xl-3 login"><a href="/auth/login"><span class="border-left pl-xl-4"></span>Log In</a></li>
+                <li class="active"><a href="/auth/register">Register</a></li>
 
                 <li><a href="#" class="cta"><span class="bg-primary text-white rounded">+ Post an Ad</span></a></li>
               </ul>
@@ -90,7 +93,7 @@
 
             
 
-            <form action="/admin/register" method="POST" class="p-5 bg-white">
+            <form action="/auth/register" method="POST" class="p-5 bg-white">
              
               <div class="row form-group">
                 
@@ -116,7 +119,7 @@
 
               <div class="row form-group">
                 <div class="col-12">
-                  <p>Have an account? <a href="/admin/login">Log In</a></p>
+                  <p>Have an account? <a href="/auth/login">Log In</a></p>
                 </div>
               </div>
 
@@ -210,6 +213,63 @@
   </div>
 
   <%-include('partials/footer')%>
+
+  <% if(userExist){%>
+
+<!-- user is  exist modal -->
+
+<!-- Button trigger modal-->
+
+
+<!-- Modal: modalAbandonedCart-->
+<div class="modal fade right" id="modalAbandonedCart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-info" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header bg-primary">
+        <p class="heading">username is exist
+        </p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-3">
+            <p></p>
+            <p class="text-center"><i class="fas fa-shopping-cart fa-4x"></i></p>
+          </div>
+
+          <div class="col-9">
+            <p>Sorry user name is already exist </p>
+            <p>Try another one.</p>
+          </div>
+        </div>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        
+        <a type="button" class="btn btn-primary waves-effect" data-dismiss="modal">OK</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!-- Modal: modalAbandonedCart-->
+
+<script>
+$('#modalAbandonedCart').modal('show');
+</script>
+<!-- finish user is  exist comment -->
+<%}%>
+
     
   </body>
 </html>

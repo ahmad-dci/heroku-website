@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const pagesRoutes = require('./src/routes/pagesRoutes');
-const adminRoutes = require('./src/routes/adminRoutes');
+const authRoutes = require('./src/routes/authRoutes');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -19,7 +19,7 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.use('/', pagesRoutes);
-app.use('/admin',adminRoutes );
+app.use('/auth',authRoutes );
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}!`);
