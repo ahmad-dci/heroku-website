@@ -24,6 +24,16 @@ authRoutes.route('/register').post((req, res) => {
     
 });
 authRoutes.route('/login').get((req, res)=>{
-res.render('login');
+res.render('login',{loginMessage: false});
 });
+authRoutes.route('/login').post((req, res)=>{
+    authControllers.checkUser(req.body.email, req.body.password, (user)=>{
+if(user){
+res.redirect('/admin');
+}
+else{
+    res.render('login',{loginMessage: true});
+}
+    })
+    });
 module.exports = authRoutes;

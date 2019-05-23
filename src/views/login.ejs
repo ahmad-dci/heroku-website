@@ -49,13 +49,13 @@
 
             
 
-            <form action="#" class="p-5 bg-white">
+            <form action="/auth/login" method="POST" class="p-5 bg-white">
              
               <div class="row form-group">
                 
                 <div class="col-md-12">
                   <label class="text-black" for="email">Email</label> 
-                  <input type="email" id="email" class="form-control">
+                  <input type="email" id="email" name="email" class="form-control">
                 </div>
               </div>
 
@@ -63,20 +63,17 @@
                 
                 <div class="col-md-12">
                   <label class="text-black" for="subject">Password</label> 
-                  <input type="password" id="subject" class="form-control">
+                  <input type="password" id="subject" name="password" class="form-control">
                 </div>
               </div>
-
               <div class="row form-group">
                 <div class="col-12">
-                  <p>No account yet? <a href="register.html">Register</a></p>
+                  <p>No account yet? <a href="/auth/register">Register</a></p>
                 </div>
               </div>
-
-            
               <div class="row form-group">
                 <div class="col-md-12">
-                  <input type="submit" value="Sign In" class="btn btn-primary py-2 px-4 text-white">
+                  <input type="submit" value="Log In" class="btn btn-primary py-2 px-4 text-white">
                 </div>
               </div>
 
@@ -112,6 +109,62 @@
   </div>
 
   <%- include('partials/scripts') %>
+
+  <% if(loginMessage){%>
+
+<!-- user is  exist modal -->
+
+<!-- Button trigger modal-->
+
+
+<!-- Modal: modalAbandonedCart-->
+<div class="modal fade right" id="modalAbandonedCart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-info" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header bg-primary">
+        <p class="heading">Login Failed
+        </p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-3">
+            <p></p>
+            <p class="text-center"><i class="fas fa-shopping-cart fa-4x"></i></p>
+          </div>
+
+          <div class="col-9">
+            <p>Sorry username or password is wrong</p>
+            <p>No account yet? <a href="/auth/register">Register</a></p>
+          </div>
+        </div>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        
+        <a type="button" class="btn btn-primary waves-effect" data-dismiss="modal">Retry</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!-- Modal: modalAbandonedCart-->
+
+<script>
+$('#modalAbandonedCart').modal('show');
+</script>
+<!-- finish user is  exist comment -->
+<%}%>
     
   </body>
 </html>
