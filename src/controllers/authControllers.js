@@ -12,7 +12,7 @@ function checkuser(email) {
             client = await MongoClient.connect(dbUrl, {
                 useNewUrlParser: true
             });
-            const db = client.db(dbname);
+            const db = client.db(dbName);
             const col = await db.collection('users');
             const user = await col.findOne({
                 username: email
