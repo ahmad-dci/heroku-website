@@ -29,11 +29,16 @@ res.render('login',{loginMessage: false});
 authRoutes.route('/login').post((req, res)=>{
     authControllers.checkUser(req.body.email, req.body.password, (user)=>{
 if(user){
+    req.session.user = user;
 res.redirect('/admin');
 }
 else{
     res.render('login',{loginMessage: true});
 }
     })
-    });
+});
+authRoutes.route('/logout').get((req, res)=>{
+    req.session.destroy();
+    res.redirect('/');
+});
 module.exports = authRoutes;
