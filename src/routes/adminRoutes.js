@@ -1,6 +1,7 @@
 const express = require('express');
 const adminRoutes = express.Router();
 
+
 adminRoutes.route('/').get((req, res) => {
     if(req.session.user){
         res.render('adminMain');
@@ -8,6 +9,10 @@ adminRoutes.route('/').get((req, res) => {
         res.redirect('/');
     }
     
+});
+adminRoutes.route('/newadd').post((req, res)=>{
+    console.log(req.body);
+res.send(req.body.somtext);
 });
 
 module.exports = adminRoutes;
