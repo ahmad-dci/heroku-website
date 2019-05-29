@@ -51,13 +51,9 @@
           <div class="col-md-12 mb-5" data-aos="fade">
 
 
-<form action="/newadd" method="POST" enctype="multipart/form-data" >
-<input type="text" name="somtext" value="">
-<input type="submit" name="" value="send">
-</form>
-            <form action="/admin/newadd" method="POST" enctype="multipart/form-data" class="form-horizontal">
-              <fieldset>
 
+            <form action="/admin/newadd" method="POST"  class="form-horizontal" enctype="multipart/form-data">
+              
                 <!-- Form Name -->
                 <legend>New ADD</legend>
 
@@ -66,7 +62,7 @@
                   <label class="col-md-4 control-label" for="textinput">Title</label>
                   <div class="col-md-5">
                     <input id="titleInput" name="titleInput" type="text" placeholder="ADD Title"
-                      class="form-control input-md" required="">
+                      class="form-control input-md" >
                     <span class="help-block">Here you need to add the ADD Title</span>
                   </div>
                 </div>
@@ -76,7 +72,7 @@
                   <label class="col-md-4 control-label" for="keywordsInput">Key words</label>
                   <div class="col-md-5">
                     <input id="keywordsInput" name="keywordsInput" type="text" placeholder="Key words"
-                      class="form-control input-md" required="">
+                      class="form-control input-md" >
                     <span class="help-block">enter the key words</span>
                   </div>
                 </div>
@@ -113,9 +109,8 @@
                     <input id="photosInput" name="photosInput" multiple class="input-file" type="file">
                   </div>
                 </div>
-
-              </fieldset>
-              <input type="submit" class="btn btn-primary" value="save">
+<input type="submit" class="btn btn-primary" value="save">
+              
             </form>
 
 

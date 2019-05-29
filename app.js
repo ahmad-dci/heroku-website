@@ -6,7 +6,7 @@ const pagesRoutes = require('./src/routes/pagesRoutes');
 const authRoutes = require('./src/routes/authRoutes');
 const adminRoutes = require('./src/routes/adminRoutes');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4555;
 
 // set express urlencoded middelwear
 app.use(session({
@@ -14,8 +14,8 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // set views folder
 app.set('views', path.join(__dirname, '/src/views'));
@@ -29,10 +29,7 @@ app.use('/', pagesRoutes);
 app.use('/auth',authRoutes );
 app.use('/admin',adminRoutes );
 
-app.post('/newadd', (req, res) => {
-    console.log(req.body.somtext);
-    res.send(req.body.somtext);
-});
+
 app.listen(port, () => {
     console.log(`App listening on port ${port}!`);
 });
