@@ -1,7 +1,4 @@
-const {
-    MongoClient
-} = require('mongodb');
-
+const {MongoClient, ObjectID} = require('mongodb');
 const dbUrl = 'mongodb+srv://lion:jeny@cluster0-rmrmn.mongodb.net/test?retryWrites=true';
 const dbName = 'herokuwebDB';
 
@@ -59,5 +56,28 @@ function addUser(email, password, callback) {
     }());
 }
 
+function changePassword(id, newPassword,done){
+    (async function mongo(){
+        let client;
+        try {
+            client = await MongoClient.connect(dbUrl,{ useNewUrlParser:true });
+            const db = client.db(dbName);
+            const response = await db.collection('users').updateOne(
+                {
+                    _id:new ObjectID(id)
+            },
+            {
+                $set:{
+                    password: newPassword
+                }
+            });
+            done(response);
+        } catch (error) {
+            done(error.message)
+        }
+        client.close();
+    }());
 
-module.exports = {checkUser, addUser};
+}
+
+module.exports = {checkUser, addUser, changePassword};
