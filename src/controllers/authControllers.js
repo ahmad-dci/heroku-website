@@ -79,5 +79,26 @@ function changePassword(id, newPassword,done){
     }());
 
 }
+function newAdv(title, keyWords, description, category, imgUrl, done ){
+(async function mongo(){
+let client;
+try {
+    client = await MongoClient.connect(dbUrl, {useNewUrlParser: true});
+    const db = client.db(dbName);
+    const response = await db.collection('advs').insertOne({
+        title: title,
+        keyWords: keyWords,
+        description: description,
+        category: category,
+        imgUrl: imgUrl
+    });
+    client.close();
+    done(response);
+} catch (error) {
+    client.close();
+    done(error.message);
+}
+}());
+}
 
-module.exports = {checkUser, addUser, changePassword};
+module.exports = {checkUser, addUser, changePassword, newAdv};

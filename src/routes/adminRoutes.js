@@ -20,10 +20,19 @@ const multerConf = multer.diskStorage({
     }
 });
 const upload = multer({ storage: multerConf });
-adminRoutes.use('/newadd',upload.array('photosInput'));
-adminRoutes.route('/newadd').post((req, res)=>{
-    console.log(req.files);
-res.send(req.files);
+adminRoutes.use('/newadv',upload.array('photosInput'));
+adminRoutes.route('/newadv').post((req, res)=>{
+    authControllers.newAdv(
+        req.body.titleInput,
+        req.body.keywordsInput,
+        req.body.descTextarea,
+        req.body.categorySelect,
+        req.files[0].destination.replace("./public","")+
+        req.files[0].filename,(result)=>{
+            res.send(result);
+        }
+         );
+
 });
 
 adminRoutes.route('/changepassword').get((req, res)=>{
