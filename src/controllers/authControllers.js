@@ -1,6 +1,7 @@
 const {MongoClient, ObjectID} = require('mongodb');
-const dbUrl = 'mongodb+srv://lion:jeny@cluster0-rmrmn.mongodb.net/test?retryWrites=true';
-const dbName = 'herokuwebDB';
+const conf = require('../conf');
+const dbUrl = conf.dbUrl;
+const dbName = conf.dbName;
 
 function checkUser(email, password, callback) {
     (async function mongo() {
@@ -79,17 +80,23 @@ function changePassword(id, newPassword,done){
     }());
 
 }
-function newAdv(title, keyWords, description, category, imgUrl, done ){
+function newAdv(title, keyWords, description, catValue, newCategory, imgUrl, done ){
+    
 (async function mongo(){
 let client;
 try {
     client = await MongoClient.connect(dbUrl, {useNewUrlParser: true});
     const db = client.db(dbName);
+    if(catValue === '-1'){
+        const catResponse = await db.collection('categories').insertOne({title: newCategory});
+        //console.log(catResponse.insertedId);
+        catValue = catResponse.insertedId;
+    }
     const response = await db.collection('advs').insertOne({
         title: title,
         keyWords: keyWords,
         description: description,
-        category: category,
+        category: catValue,
         imgUrl: imgUrl
     });
     client.close();
@@ -101,4 +108,20 @@ try {
 }());
 }
 
-module.exports = {checkUser, addUser, changePassword, newAdv};
+function getCategories(done){
+    (async function mongo(){
+        let client;
+        try {
+            client = await MongoClient.connect(dbUrl, {useNewUrlParser: true});
+            const db = client.db(dbName);
+            const cats = await db.collection('categories').find().toArray();
+            client.close();
+            done(true, cats);
+        } catch (error) {
+            client.close();
+            done(false, error.message);
+        }
+    }())
+}
+
+module.exports = {checkUser, addUser, changePassword, newAdv, getCategories};

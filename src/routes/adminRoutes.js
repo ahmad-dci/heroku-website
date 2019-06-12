@@ -3,14 +3,18 @@ const multer = require('multer');
 const authControllers = require('../controllers/authControllers');
 const adminRoutes = express.Router();
 
-
-
-adminRoutes.route('/').get((req, res) => {
+// this is a middleware to check the session for all routes under /admin 
+// so you dont need to check session in every route indevedualy
+adminRoutes.use((req, res, next)=>{
     if(req.session.user){
-        res.render('adminMain');
+        next();
     }else{
         res.redirect('/');
     }
+})
+
+adminRoutes.route('/').get((req, res) => {
+    res.render('adminMain');
     
 });
 const multerConf = multer.diskStorage({
@@ -21,15 +25,36 @@ const multerConf = multer.diskStorage({
 });
 const upload = multer({ storage: multerConf });
 adminRoutes.use('/newadv',upload.array('photosInput'));
+adminRoutes.route('/newadv').get((req, res)=>{
+    authControllers.getCategories((ok, result)=>{
+        if(ok){
+            console.log(result);
+            res.render('newAdv',{result});
+        }else{
+            res.send(result);
+        }
+        
+    })
+
+});
 adminRoutes.route('/newadv').post((req, res)=>{
     authControllers.newAdv(
         req.body.titleInput,
         req.body.keywordsInput,
         req.body.descTextarea,
         req.body.categorySelect,
+        req.body.newCategory,
         req.files[0].destination.replace("./public","")+
         req.files[0].filename,(result)=>{
-            res.send(result);
+            authControllers.getCategories((ok, result)=>{
+                if(ok){
+                    console.log(result);
+                    res.render('newAdv',{result});
+                }else{
+                    res.send(result);
+                }
+                
+            })
         }
          );
 

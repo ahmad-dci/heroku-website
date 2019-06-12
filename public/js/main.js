@@ -256,6 +256,26 @@ jQuery(document).ready(function($) {
 
 	};
 	siteRangeSlider();
-	
 
+	
+// hide show category field in newadv.ejs
+function checkCat(){
+	let selectedOption = $("#categorySelect").children("option:selected").val();
+//alert(selectedOption);
+if(selectedOption === "-1"){
+//alert(selectedOption);
+$('#newcatContainer').removeClass('d-none');
+}else{
+$('#newcatContainer').addClass('d-none');
+}
+}
+checkCat();
+	$("#categorySelect").change(()=>{
+		checkCat();
+	});
 });
+
+
+
+
+

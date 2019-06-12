@@ -3,8 +3,7 @@ const { MongoClient } = require('mongodb');
 //const MongoClient = require('mongodb').MongoClient;
 const authControllers = require('../controllers/authControllers');
 
-const dbUrl = 'mongodb+srv://lion:jeny@cluster0-rmrmn.mongodb.net/test?retryWrites=true';
-const dbName ='herokuwebDB';
+
 
 const authRoutes = express.Router();
 
