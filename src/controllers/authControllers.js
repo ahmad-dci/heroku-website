@@ -124,4 +124,23 @@ function getCategories(done){
     }())
 }
 
-module.exports = {checkUser, addUser, changePassword, newAdv, getCategories};
+function getAdv(id, done){
+    (async function mongo(){
+        let client;
+        try {
+            client = await MongoClient.connect(dbUrl, {useNewUrlParser: true});
+            const db = client.db(dbName);
+            const adv = await db.collection('advs').findOne({
+                _id: new ObjectID(id)
+            });
+            client.close();
+            done(true, adv);
+
+        } catch (error) {
+            client.close();
+            done(false, error.message);
+        }
+    }())
+}
+
+module.exports = {checkUser, addUser, changePassword, newAdv, getCategories, getAdv};

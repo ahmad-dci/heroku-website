@@ -35,7 +35,7 @@
 
             <div class="row justify-content-center mt-5">
               <div class="col-md-8 text-center">
-                <h1>Admin Panel</h1>
+                <h1>Advertisements Management</h1>
               </div>
             </div>
 
@@ -52,11 +52,34 @@
 
 
 
-            <a href="/admin/newadv">add new Advertisment</a>
-            <br>
-            <a href="/admin/changepassword">change password</a>
-            <br>
-            <a href="/admin/advsmanag">Advertisements Management</a>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Keywords</th>
+      <th scope="col">Category</th>
+      <th scope="col">Image</th>
+      <th scope="col">Edite</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+<%for(let i = 0 ; i < result.length ; i++){%>
+    <tr>
+      <th scope="row"><%=i+1%></th>
+      <td><%=result[i].title%></td>
+      <td><%=result[i].keyWords%></td>
+      <td><%=result[i].category%></td>
+      <td><img class="img-thumbnail" src="<%=result[i].imgUrl[0]%>" style="width:100px;height:100px" ></td>
+      <td><a href="/admin/advsedite/<%=result[i]._id%>" " >edite</a></td>
+      <td><a href="#" " >delete</a></td>
+    </tr>
+<%}%>
+  </tbody>
+</table>
+
+            
 
 
 

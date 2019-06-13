@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const authControllers = require('../controllers/authControllers');
+const enduserControllers = require('../controllers/enduserController');
 const adminRoutes = express.Router();
 
 // this is a middleware to check the session for all routes under /admin 
@@ -40,11 +41,7 @@ adminRoutes.route('/newadv').get((req, res)=>{
 adminRoutes.route('/newadv').post((req, res)=>{
     let photosArr = [];
     for (let i = 0; i < req.files.length; i++) {
-        photosArr.push(
-            req.files[i].destination.replace("./public","")+
-            req.files[i].filename
-        );
-        
+        photosArr.push(req.files[i].destination.replace("./public","")+req.files[i].filename);
     }
     authControllers.newAdv(
         req.body.titleInput,
@@ -60,11 +57,9 @@ adminRoutes.route('/newadv').post((req, res)=>{
                 }else{
                     res.send(result);
                 }
-                
             })
         }
          );
-
 });
 
 adminRoutes.route('/changepassword').get((req, res)=>{
@@ -81,5 +76,38 @@ authControllers.changePassword(req.session.user._id,req.body.changepswInput,(res
 res.redirect('/auth/login');
 });
 //res.send(req.body.changepswInput);
+});
+adminRoutes.route('/advsmanag').get((req, res)=>{
+    enduserControllers.getAdvs((ok, result)=>{
+        if(ok){
+            res.render('advsmanag',{ result });
+        }else{
+            res.send(result);
+        }
+        
+    })
+
+});
+adminRoutes.route('/advsedite/:id').get((req, res)=>{
+    const advId = req.params.id;
+authControllers.getAdv(advId,(chekAdv, adv)=>{
+
+    if(chekAdv){
+    authControllers.getCategories((ok, categories)=>{
+        if(ok){
+            res.render('advsedite',{categories, adv});
+        }else{
+            res.send(result);
+        }
+    });
+}else{
+    res.send(adv);
+}
+
+
+
+});
+
+    
 });
 module.exports = adminRoutes;
