@@ -24,7 +24,7 @@ const multerConf = multer.diskStorage({
     }
 });
 const upload = multer({ storage: multerConf });
-adminRoutes.use('/newadv',upload.array('photosInput'));
+adminRoutes.use('/newadv',upload.array('photosInput',10));
 adminRoutes.route('/newadv').get((req, res)=>{
     authControllers.getCategories((ok, result)=>{
         if(ok){
@@ -38,14 +38,21 @@ adminRoutes.route('/newadv').get((req, res)=>{
 
 });
 adminRoutes.route('/newadv').post((req, res)=>{
+    let photosArr = [];
+    for (let i = 0; i < req.files.length; i++) {
+        photosArr.push(
+            req.files[i].destination.replace("./public","")+
+            req.files[i].filename
+        );
+        
+    }
     authControllers.newAdv(
         req.body.titleInput,
         req.body.keywordsInput,
         req.body.descTextarea,
         req.body.categorySelect,
         req.body.newCategory,
-        req.files[0].destination.replace("./public","")+
-        req.files[0].filename,(result)=>{
+        photosArr,(result)=>{
             authControllers.getCategories((ok, result)=>{
                 if(ok){
                     console.log(result);
